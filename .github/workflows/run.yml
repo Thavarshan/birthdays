@@ -1,0 +1,26 @@
+name: Run application
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs at mid night everyday
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.8]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+    - name: Run main app module
+      env:
+        GMAIL_ID: ${{ secrets.GMAIL_ID }}
+        GMAIL_PWD: ${{ secrets.GMAIL_PWD }}
+      run: python3 app.py
