@@ -2,7 +2,7 @@ name: Run application
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs at mid night everyday
+    - cron: '0 * * * *'
 
 jobs:
   build:
