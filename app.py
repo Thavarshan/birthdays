@@ -1,31 +1,12 @@
-from dotenv import load_dotenv
-from datetime import datetime
-import smtplib
-import os
-import json
-from message import CONTENT
-import logging
-from email.message import EmailMessage
+from dotenv import load_dotenv, find_dotenv
+from pathlib import Path
+from src.birthdays import Birthdays
+from src.config import ProductionConfig
 
 
 def main(people: str):
-    load_dotenv()
-    with open(people, 'r+') as everyone:
-        for person in json.load(everyone):
-            if person.get('birthday') == datetime.now().strftime("%d-%m"):
-                wish_person(person.get('email'))
-
-
-def wish_person(email: str):
-    try:
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
-            server.ehlo()
-            server.starttls()
-            server.ehlo()
-            server.login(os.getenv("GMAIL_ID"), os.getenv("GMAIL_PWD"))
-            server.sendmail(os.getenv("GMAIL_ID"), email, CONTENT)
-    except Exception as e:
-        logging.error(str(e))
+    birthdays = Birthdays()
+    birthdays.check_for_birthdays_today(people)
 
 
 if __name__ == '__main__':
