@@ -1,8 +1,9 @@
 name: Run application
 
 on:
+  push:
+  pull_request:
   schedule:
-    - push
     - cron: '0 0 * * *'
 
 jobs:
