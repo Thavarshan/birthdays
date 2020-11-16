@@ -27,5 +27,5 @@ class WisherTest(unittest.TestCase):
     def test_wish_person(self):
         wisher = Wisher()
         wisher.wish_person('tjthavarshan@gmail.com')
-        mock_server = MockSMTPServer()
+        mock_server = MockSMTPServer('smtp.gmail.com', 465)
         self.assertTrue(1, mock_server.received_messages_count())
