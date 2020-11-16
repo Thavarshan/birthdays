@@ -7,6 +7,7 @@ from pathlib import Path
 class Config(ABC):
 
     host = 'smtp.gmail.com'
+    port = 587
     ssl_port = 465
 
     def __init__(self):
