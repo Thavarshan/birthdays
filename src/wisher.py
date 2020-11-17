@@ -1,8 +1,8 @@
 import random
 import json
 from .emails import BirthdayEmail
-from .mailer import Mailer
-from .config import ProductionConfig
+from .mailer import OAuthMailer
+from decouple import config
 
 
 class Wisher:
@@ -10,12 +10,15 @@ class Wisher:
     __poem_file = 'poems.json'
 
     def __init__(self):
-        self.mailer = Mailer(ProductionConfig())
+        self.mailer = OAuthMailer()
         self.birthday_email = BirthdayEmail()
 
-    def wish_person(self, email: str):
-        content = self.birthday_email.make_email(self.pick_random_poem())
-        self.mailer.send_email(email, content)
+    def wish_person(self, email):
+        fromaddr = config('MAIL_FROM_ADDRESS')
+        content = self.birthday_email.make_email(
+            fromaddr, email, self.pick_random_poem()
+        )
+        self.mailer.send_mail(fromaddr, email, content)
 
     def pick_random_poem(self):
         with open(self.__poem_file, 'r+') as poems:

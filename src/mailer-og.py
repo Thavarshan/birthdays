@@ -2,9 +2,8 @@ import smtplib
 from abc import ABC, abstractmethod
 import base64
 from decouple import config
+import urllib
 import json
-import urllib.parse
-import urllib.request
 
 
 class Mailer(ABC):
@@ -21,6 +20,9 @@ class OAuthMailer(Mailer):
             'GOOGLE_CLIENT_ID'), config('GOOGLE_CLIENT_SECRET'), config('GOOGLE_REFRESH_TOKEN'))
         auth_string = self.generate_oauth2_string(
             fromaddr, access_token, as_base64=True)
+
+        content['From'] = fromaddr
+        content['To'] = toaddr
 
         with smtplib.SMTP('smtp.gmail.com:587') as server:
             server.ehlo(config('GOOGLE_CLIENT_ID'))
@@ -46,7 +48,7 @@ class OAuthMailer(Mailer):
         ).read().decode('UTF-8')
         return json.loads(response)
 
-    def command_to_url(self, command):
+    def command_to_url(command):
         return '%s/%s' % (config('GOOGLE_ACCOUNTS_BASE_URL'), command)
 
     def generate_oauth2_string(self, username, access_token, as_base64=False):

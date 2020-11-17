@@ -1,7 +1,6 @@
 from dotenv import load_dotenv, find_dotenv
 from pathlib import Path
 from src.birthdays import Birthdays
-from src.config import ProductionConfig
 
 
 def main(people: str):
