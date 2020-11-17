@@ -14,13 +14,23 @@ class Mailer(ABC):
         pass
 
 
+class SMTPMailer(Mailer):
+
+    def send_mail(self, fromaddr, toaddr, content):
+        with smtplib.SMTP_SSL(config('MAIL_SERVER'), config('MAIL_PORT')) as server:
+            server.login(config('MAIL_FROM_ADDRESS'), config('MAIL_PASSWORD'))
+            server.send_message(content)
+
+
 class OAuthMailer(Mailer):
 
     def send_mail(self, fromaddr, toaddr, content):
         access_token, expires_in = self.refresh_authorization(config(
-            'GOOGLE_CLIENT_ID'), config('GOOGLE_CLIENT_SECRET'), config('GOOGLE_REFRESH_TOKEN'))
+            'GOOGLE_CLIENT_ID'), config('GOOGLE_CLIENT_SECRET'), config('GOOGLE_REFRESH_TOKEN')
+        )
         auth_string = self.generate_oauth2_string(
-            fromaddr, access_token, as_base64=True)
+            fromaddr, access_token, as_base64=True
+        )
 
         with smtplib.SMTP('smtp.gmail.com:587') as server:
             server.ehlo(config('GOOGLE_CLIENT_ID'))
@@ -53,5 +63,6 @@ class OAuthMailer(Mailer):
         auth_string = 'user=%s\1auth=Bearer %s\1\1' % (username, access_token)
         if as_base64:
             auth_string = base64.b64encode(
-                auth_string.encode('ascii')).decode('ascii')
+                auth_string.encode('ascii')
+            ).decode('ascii')
         return auth_string
