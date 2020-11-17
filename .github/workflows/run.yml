@@ -23,6 +23,10 @@ jobs:
       run: pip install -r requirements.txt
     - name: Run main app module
       env:
-        GMAIL_ID: ${{ secrets.GMAIL_ID }}
-        GMAIL_PWD: ${{ secrets.GMAIL_PWD }}
+        GOOGLE_ACCOUNTS_BASE_URL: ${{ secrets.GOOGLE_ACCOUNTS_BASE_URL }}
+        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
+        MAIL_FROM_ADDRESS: ${{ secrets.MAIL_FROM_ADDRESS }}
+        REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
       run: python3 app.py
