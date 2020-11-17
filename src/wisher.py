@@ -7,7 +7,7 @@ from decouple import config
 
 class Wisher:
 
-    __poem_file = 'poems.json'
+    __poem_file = 'data/poems.json'
 
     def __init__(self):
         self.mailer = OAuthMailer()

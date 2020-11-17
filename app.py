@@ -9,4 +9,4 @@ def main(people: str):
 
 
 if __name__ == '__main__':
-    main('people.json')
+    main('data/people.json')
