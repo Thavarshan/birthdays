@@ -1,4 +1,3 @@
-from dotenv import load_dotenv, find_dotenv
 from pathlib import Path
 from src.birthdays import Birthdays
 
@@ -9,4 +8,4 @@ def main(people: str):
 
 
 if __name__ == '__main__':
-    main('data/people.json')
+    main(Path('.') / 'tests/fixtures/people-test.json')

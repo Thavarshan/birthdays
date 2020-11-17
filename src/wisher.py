@@ -3,15 +3,15 @@ import json
 from .emails import BirthdayEmail
 from .mailer import OAuthMailer
 from decouple import config
+from pathlib import Path
 
 
 class Wisher:
 
-    __poem_file = 'data/poems.json'
-
     def __init__(self):
         self.mailer = OAuthMailer()
         self.birthday_email = BirthdayEmail()
+        self.__poem_file = Path('.') / 'data/poems.json'
 
     def wish_person(self, email):
         fromaddr = config('MAIL_FROM_ADDRESS')
