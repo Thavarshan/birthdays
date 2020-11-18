@@ -8,4 +8,4 @@ def main(people: str):
 
 
 if __name__ == '__main__':
-    main(Path('.') / 'tests/fixtures/people-test.json')
+    main(Path('.') / 'data/people.json')
