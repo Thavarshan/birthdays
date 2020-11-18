@@ -28,4 +28,6 @@ jobs:
         GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
         MAIL_FROM_ADDRESS: ${{ secrets.MAIL_FROM_ADDRESS }}
         REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
+        API_TOKEN: ${{ secrets.API_TOKEN }}
+        API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
       run: python3 app.py
