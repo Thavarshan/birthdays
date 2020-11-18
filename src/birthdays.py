@@ -14,16 +14,16 @@ class Birthdays:
 
     def check_for_birthdays_today(self, people=None):
         token = config('API_TOKEN')
+        endpoint = config('API_ENDPOINT')
         headers = {'Authorization': f'Bearer {token}'}
-        response = requests.get(
-            'http://batch-95.test/api/ping', headers=headers
-        )
+        response = requests.get(endpoint, headers=headers)
         [self.wish_person(person.get('email')) for person
          in response.json()
          if self.is_birthday_today(person.get('birthday'))]
 
     def wish_person(self, email):
-        self.wisher.wish_person(email)
+        print(email)
+        # self.wisher.wish_person(email)
 
     def is_birthday_today(self, birthday):
         birthday = (
