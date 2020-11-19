@@ -9,5 +9,6 @@ def main(people=None):
 
 
 if __name__ == '__main__':
-    with open(Path('.') / 'tests/fixtures/people-test.json', 'r+') as people:
-        main(json.load(people))
+    # with open(Path('.') / 'tests/fixtures/people-test.json', 'r+') as people:
+    #     main(json.load(people))
+    main()
