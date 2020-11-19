@@ -13,13 +13,19 @@ class Birthdays:
         self.wisher = Wisher(OAuthMailer(), BirthdayEmail())
 
     def check_for_birthdays_today(self, people=None):
-        token = config('API_TOKEN')
-        endpoint = config('API_ENDPOINT')
-        headers = {'Authorization': f'Bearer {token}'}
-        response = requests.get(endpoint, headers=headers)
+        if people == None:
+            people = self.get_data(
+                config('API_ENDPOINT'), config('API_TOKEN')
+            ).json()
+        self.find_birthdays_and_mail_wishes(people)
+
+    def find_birthdays_and_mail_wishes(self, people):
         [self.wish_person(person.get('email')) for person
-         in response.json()
-         if self.is_birthday_today(person.get('birthday'))]
+            in people
+            if self.is_birthday_today(person.get('birthday'))]
+
+    def get_data(self, endpoint, token):
+        return requests.get(endpoint, headers={'Authorization': f'Bearer {token}'})
 
     def wish_person(self, email):
         print(email)
@@ -31,4 +37,4 @@ class Birthdays:
             .strptime(birthday, '%Y-%m-%dT%H:%M:%S.%fZ')
             .strftime("%d-%m")
         )
-        return birthday == datetime.now().strftime("%d-%m")
+        return bool(birthday == datetime.now().strftime("%d-%m"))
