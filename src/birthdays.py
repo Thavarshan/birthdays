@@ -1,4 +1,3 @@
-import json
 from .wisher import Wisher
 from datetime import datetime
 from .emails import BirthdayEmail

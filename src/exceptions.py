@@ -1,0 +1,2 @@
+class MailNotSentException(Exception):
+    pass
