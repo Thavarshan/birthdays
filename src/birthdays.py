@@ -18,7 +18,8 @@ class Birthdays:
         if people == None:
             people = self.get_data(config('API_ENDPOINT')).json()
         self.find_birthdays_and_mail_wishes(people)
-        self.log_details(config('API_LOGGING_ENDPOINT'), self.__birthdays)
+        if bool(self.__birthdays):
+            self.log_details(config('API_LOGGING_ENDPOINT'), self.__birthdays)
 
     def find_birthdays_and_mail_wishes(self, people):
         [self.wish_person(person) for person
