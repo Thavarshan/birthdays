@@ -13,7 +13,11 @@ class Email(ABC):
 
 class BirthdayEmail(Email):
 
-    def make_email(self, fromaddr, toaddr, content):
+    def build_content(self, name, content):
+        return f"Dear {name}\n" + content + "\nFrom your batch mates at ICBT."
+
+    def make_email(self, fromaddr, toaddr, name, content):
+        content = self.build_content(name, content)
         message = MIMEMultipart('related')
         message['From'] = fromaddr
         message['To'] = toaddr

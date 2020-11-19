@@ -1,4 +1,6 @@
+import json
 from src.birthdays import Birthdays
+from pathlib import Path
 
 
 def main(people=None):
@@ -7,4 +9,5 @@ def main(people=None):
 
 
 if __name__ == '__main__':
-    main()
+    with open(Path('.') / 'tests/fixtures/people-test.json', 'r+') as people:
+        main(json.load(people))

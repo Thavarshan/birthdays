@@ -14,9 +14,9 @@ class Wisher:
         self.__poem_file = Path('.') / 'data/poems.json'
         self.fromaddr = config('MAIL_FROM_ADDRESS')
 
-    def wish_person(self, email):
+    def wish_person(self, name, email):
         content = self.birthday_email.make_email(
-            self.fromaddr, email, self.pick_random_poem()
+            self.fromaddr, email, name, self.pick_random_poem()
         )
         self.mailer.send_mail(self.fromaddr, email, content)
 
