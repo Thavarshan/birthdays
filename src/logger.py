@@ -11,7 +11,7 @@ class Logger:
         self.__app_name = config('APP_NAME')
 
     def log(self, students):
-        response = requests.post(
+        requests.post(
             self.__endpoint,
             json={
                 "init_time": str(datetime.now()),

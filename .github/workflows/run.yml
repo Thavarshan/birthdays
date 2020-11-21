@@ -29,5 +29,7 @@ jobs:
         REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
         API_TOKEN: ${{ secrets.API_TOKEN }}
         API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
-        API_LOGGING_ENDPOINT: ${{ secrets.API_ENDPOINT }}
+        API_LOGGING_ENDPOINT: ${{ secrets.API_LOGGING_ENDPOINT }}
+        APP_NAME: ${{ secrets.APP_NAME }}
+        APP_ENV: ${{ secrets.APP_ENV }}
       run: python3 app.py

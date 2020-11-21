@@ -7,13 +7,14 @@ import urllib.request
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import lxml.html
+from decouple import config
 
-GOOGLE_ACCOUNTS_BASE_URL = 'https://accounts.google.com'
-REDIRECT_URI = 'urn:ietf:wg:oauth:2.0:oob'
+GOOGLE_ACCOUNTS_BASE_URL = config('GOOGLE_ACCOUNTS_BASE_URL')
+REDIRECT_URI = config('REDIRECT_URI')
 
-GOOGLE_CLIENT_ID = '986569752720-mm50jd82ebfgm263pbu0d07hqnlk511v.apps.googleusercontent.com'
-GOOGLE_CLIENT_SECRET = 'Z5IvyUNE-UG7hD_bWTGZDO_j'
-GOOGLE_REFRESH_TOKEN = '1//0gA6chR2TXFrkCgYIARAAGBASNwF-L9IrpDkyE-REvt3qHcBp2rZwfT8MNrtaSY9PEiTomUQuSDSGncvhPCcBxWlkyWebe_Mc_vE'
+GOOGLE_CLIENT_ID = config('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = config('GOOGLE_CLIENT_SECRET')
+GOOGLE_REFRESH_TOKEN = config('GOOGLE_REFRESH_TOKEN')
 
 
 def command_to_url(command):
