@@ -33,5 +33,5 @@ jobs:
         API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
         API_LOGGING_ENDPOINT: ${{ secrets.API_LOGGING_ENDPOINT }}
         APP_NAME: ${{ secrets.APP_NAME }}
-        APP_ENV: ${{ secrets.APP_ENV }}
+        APP_ENV: local
       run: python3 -m unittest discover tests -p '*_test.py'
