@@ -1,9 +1,8 @@
 import sys
 from decouple import config
 import json
-from src.logger import Logger
-from src.birthdays import Birthdays
-from pathlib import Path
+from birthdays.logger import Logger
+from birthdays.birthdays import Birthdays
 
 
 def main(people=None):
@@ -17,7 +16,7 @@ def main(people=None):
 
 if __name__ == '__main__':
     if config('APP_ENV') == 'local':
-        with open(Path('.') / 'tests/fixtures/people-test.json', 'r+') as people:
+        with open('tests/fixtures/people-test.json', 'r+') as people:
             main(json.load(people))
     else:
         main()

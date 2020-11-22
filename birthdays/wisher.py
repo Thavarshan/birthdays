@@ -18,7 +18,10 @@ class Wisher:
         content = self.birthday_email.make_email(
             self.fromaddr, email, name, self.pick_random_poem()
         )
-        self.mailer.send_mail(self.fromaddr, email, content)
+        if config('APP_ENV') == 'production':
+            self.mailer.send_mail(self.fromaddr, email, content)
+        else:
+            return name
 
     def pick_random_poem(self):
         with open(self.__poem_file, 'r+') as poems:

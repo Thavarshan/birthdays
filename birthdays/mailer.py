@@ -1,3 +1,4 @@
+from .exceptions import MailNotSentException
 import smtplib
 from abc import ABC, abstractmethod
 import base64
@@ -37,6 +38,8 @@ class OAuthMailer(Mailer):
             server.starttls()
             server.docmd('AUTH', 'XOAUTH2 ' + auth_string)
             server.sendmail(fromaddr, toaddr, content)
+            if server.noop() is not (250, 'Ok'):
+                raise MailNotSentException()
 
     def refresh_authorization(self, google_client_id, google_client_secret, refresh_token):
         response = self.call_refresh_token(
