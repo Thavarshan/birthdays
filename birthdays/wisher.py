@@ -20,8 +20,7 @@ class Wisher:
         )
         if config('APP_ENV') == 'production':
             self.mailer.send_mail(self.fromaddr, email, content)
-        else:
-            return name
+        return name
 
     def pick_random_poem(self):
         with open(self.__poem_file, 'r+') as poems:

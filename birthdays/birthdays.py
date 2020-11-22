@@ -23,11 +23,11 @@ class Birthdays:
         print(self.logger.log(self.__birthdays))
 
     def find_birthdays_and_mail_wishes(self, people):
-        [self.wish_person(person) for person
-            in people if self.is_birthday_today(person.get('birthday'))]
+        self.__birthdays = [self.wish_person(person) for person
+                            in people
+                            if self.is_birthday_today(person.get('birthday'))]
 
     def wish_person(self, person):
-        self.__birthdays.append(person.get('name'))
         return self.wisher.wish_person(person.get('name'), person.get('email'))
 
     def is_birthday_today(self, birthday):
