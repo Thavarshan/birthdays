@@ -28,7 +28,7 @@ class Birthdays:
 
     def wish_person(self, person):
         self.__birthdays.append(person.get('name'))
-        # return self.wisher.wish_person(person.get('name'), person.get('email'))
+        return self.wisher.wish_person(person.get('name'), person.get('email'))
 
     def is_birthday_today(self, birthday):
         try:
