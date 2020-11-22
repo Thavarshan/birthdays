@@ -38,7 +38,7 @@ class OAuthMailer(Mailer):
             server.starttls()
             server.docmd('AUTH', 'XOAUTH2 ' + auth_string)
             server.sendmail(fromaddr, toaddr, content)
-            if server.noop() is not (250, 'Ok'):
+            if server.noop() != (250, 'Ok'):
                 raise MailNotSentException()
 
     def refresh_authorization(self, google_client_id, google_client_secret, refresh_token):

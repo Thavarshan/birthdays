@@ -20,7 +20,8 @@ class Birthdays:
         if people == None:
             people = self.requests.get().json()
         self.find_birthdays_and_mail_wishes(people)
-        print(self.logger.log(self.__birthdays))
+        if config('APP_ENV') == 'production':
+            self.logger.log(self.__birthdays)
 
     def find_birthdays_and_mail_wishes(self, people):
         self.__birthdays = [self.wish_person(person) for person

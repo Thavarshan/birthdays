@@ -26,14 +26,6 @@ class BirthdaysTest(unittest.TestCase):
             "email": 'james@example.com'
         }))
 
-    def test_logs_person_details_after_wishing(self):
-        birthday = Birthdays()
-        birthday.wish_person({
-            "name": "James",
-            "email": 'james@example.com'
-        })
-        self.assertEqual('James', birthday.birthdays_today()[0])
-
     def test_checks_for_peopls_birthdays_and_wishes_them(self):
         birthday = Birthdays()
         birthday.check_for_birthdays_today([
