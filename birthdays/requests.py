@@ -18,7 +18,7 @@ class Requests:
             'X-App-Name': self.__app_name
         })
 
-    def post(self, endpoint, data={}):
+    def post(self, endpoint=None, data={}):
         if endpoint == None:
             endpoint = self.__post_endpoint
         return requests.post(self.__post_endpoint, json=data, headers={

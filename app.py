@@ -15,8 +15,10 @@ def main(people=None):
 
 
 if __name__ == '__main__':
-    if config('APP_ENV') == 'local':
-        with open('tests/fixtures/people-test.json', 'r+') as people:
-            main(json.load(people))
-    else:
-        main()
+    with open('tests/fixtures/people-test.json', 'r+') as people:
+        main(json.load(people))
+    # if config('APP_ENV') == 'local':
+    #     with open('tests/fixtures/people-test.json', 'r+') as people:
+    #         main(json.load(people))
+    # else:
+    #     main()
