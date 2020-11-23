@@ -11,14 +11,12 @@ def main(people=None):
         birthdays.check_for_birthdays_today(people)
     except:
         logger = Logger()
-        logger.log_error(str(sys.exc_info()[0]))
+        logger.log_error(str(sys.exc_info()))
 
 
 if __name__ == '__main__':
-    with open('tests/fixtures/people-test.json', 'r+') as people:
-        main(json.load(people))
-    # if config('APP_ENV') == 'local':
-    #     with open('tests/fixtures/people-test.json', 'r+') as people:
-    #         main(json.load(people))
-    # else:
-    #     main()
+    if config('APP_ENV') == 'local':
+        with open('tests/fixtures/people-test.json', 'r+') as people:
+            main(json.load(people))
+    else:
+        main()

@@ -33,3 +33,9 @@ jobs:
         APP_NAME: ${{ secrets.APP_NAME }}
         APP_ENV: ${{ secrets.APP_ENV }}
       run: python3 app.py
+    - name: Upload artifacts
+      uses: actions/upload-artifact@master
+      if: failure()
+      with:
+        name: Logs
+        path: ./storage/logs

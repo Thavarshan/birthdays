@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 from .requests import Requests
 
@@ -10,7 +11,7 @@ class Logger:
     def log(self, students):
         return self.requests.post(data={
             "init_time": str(datetime.now()),
-            "students": students,
+            "students": json.dumps(students),
             "status": True,
             "context": None
         })
@@ -18,7 +19,7 @@ class Logger:
     def log_error(self, error):
         return self.requests.post(data={
             "init_time": str(datetime.now()),
-            "students": {},
+            "students": json.dumps([]),
             "status": False,
             "context": error
         })

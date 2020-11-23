@@ -14,7 +14,7 @@ class Birthdays:
     def __init__(self):
         self.wisher = Wisher(OAuthMailer(), BirthdayEmail())
         self.logger = Logger()
-        self.request = Requests()
+        self.requests = Requests()
 
     def check_for_birthdays_today(self, people=None):
         if people == None:
