@@ -1,5 +1,4 @@
 
-import json
 import unittest
 from datetime import datetime
 from birthdays.birthdays import Birthdays
@@ -25,6 +24,17 @@ class BirthdaysTest(unittest.TestCase):
             "name": "James",
             "email": 'james@example.com'
         }))
+
+    def test_find_birthdays_and_mail_wishes_returns_a_list_of_people_with_birthdays(self):
+        birthday = Birthdays()
+        birthdays = birthday.find_birthdays_and_mail_wishes([
+            {
+                "name": "James",
+                "email": 'james@example.com',
+                "birthday": datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+            }
+        ])
+        self.assertIs(type(birthdays), list)
 
     def test_checks_for_peopls_birthdays_and_wishes_them(self):
         birthday = Birthdays()

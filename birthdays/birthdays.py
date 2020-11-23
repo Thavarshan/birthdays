@@ -19,14 +19,14 @@ class Birthdays:
     def check_for_birthdays_today(self, people=None):
         if people == None:
             people = self.requests.get().json()
-        self.find_birthdays_and_mail_wishes(people)
+        self.__birthdays = self.find_birthdays_and_mail_wishes(people)
         if config('APP_ENV') == 'production':
             self.logger.log(self.__birthdays)
 
     def find_birthdays_and_mail_wishes(self, people):
-        self.__birthdays = [self.wish_person(person) for person
-                            in people
-                            if self.is_birthday_today(person.get('birthday'))]
+        return [self.wish_person(person) for person
+                in people
+                if self.is_birthday_today(person.get('birthday'))]
 
     def wish_person(self, person):
         return self.wisher.wish_person(person.get('name'), person.get('email'))
