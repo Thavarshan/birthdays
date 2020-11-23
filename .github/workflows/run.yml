@@ -1,6 +1,7 @@
 name: Run application
 
 on:
+  push:
   schedule:
     - cron: '0 0 * * *'
 
