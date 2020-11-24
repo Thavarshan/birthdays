@@ -21,7 +21,7 @@ Open source, and can be seen by everyone, but no changes can be made unless perm
 ## External API
 PHP cloud-based app hosted on a cloud server with bank-grade security levels. A data breach is nearly impossible. Student details are saved within a PostgreSQL database within the hosting platform and cannot be altered by any means except through my account on the host.
 
-#### How the secure connection is made between the Python app and PHP web app
+### How the secure connection is made between the Python app and PHP web app
 - An API token must be generated from the console of the host within the PHP app. This can only be done through a secure terminal connection through my account on the hosting platform.
 - The generated token is then saved within the secret environment variables on GitHub which cannot be accessed unless logged into my GitHub account.
 - The Python app then makes a GET request with the generated token as the "Bearer token" for authorization of the PHP app.
