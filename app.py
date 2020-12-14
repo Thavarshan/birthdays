@@ -15,5 +15,6 @@ def main(people=None):
 
 
 if __name__ == '__main__':
-    with open('tests/fixtures/people-test.json', 'r+') as people:
-        main(json.load(people))
+    main()
+    # with open('tests/fixtures/people-test.json', 'r+') as people:
+    #     main(json.load(people))
