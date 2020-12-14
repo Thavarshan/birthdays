@@ -22,6 +22,7 @@ class Birthdays:
         self.__birthdays = self.find_birthdays_and_mail_wishes(people)
         if config('APP_ENV') == 'production':
             self.logger.log(self.__birthdays)
+            print(self.__birthdays)
 
     def find_birthdays_and_mail_wishes(self, people):
         return [self.wish_person(person) for person
