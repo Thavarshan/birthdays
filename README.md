@@ -1,7 +1,7 @@
 # Birthdays
 Birthdays is a Python app that automates sending birthday emails. It runs every day through GitHub actions and cron scheduling and gets its data from a secured external source.
 
-## Basic workflow
+## Basic Workflow
 Runs every day at 05:45 GMT,
 - Send a GET request to an external API where the data lives.
 - Receives a JSON response from external server (content: student details)
