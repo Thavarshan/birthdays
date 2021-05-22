@@ -2,6 +2,7 @@ name: Run application
 
 on:
   push:
+    branch: main
   schedule:
     - cron: '0 0 * * *'
 

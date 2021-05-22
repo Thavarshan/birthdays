@@ -1,4 +1,3 @@
-import base64
 from abc import ABC, abstractmethod
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -15,14 +14,14 @@ class Email(ABC):
 class BirthdayEmail(Email):
 
     def build_content(self, name, content):
-        return f"Dear {name},\n" + content
+        return f"Dear {name},\n" + content + "\nFrom your batch mates at ICBT."
 
     def make_email(self, fromaddr, toaddr, name, content):
         content = self.build_content(name, content)
         message = MIMEMultipart('related')
         message['From'] = fromaddr
         message['To'] = toaddr
-        message['Subject'] = f'Wish you a very happy birthday {name}!'
+        message['Subject'] = f'Wish you a very happy birthday!'
         message.preamble = 'This is a multi-part message in MIME format.'
         message_alternative = MIMEMultipart('alternative')
         message.attach(message_alternative)
@@ -34,4 +33,4 @@ class BirthdayEmail(Email):
         part_html = MIMEText(content.encode('utf-8'), 'html', _charset='utf-8')
         message_alternative.attach(part_text)
         message_alternative.attach(part_html)
-        return {'raw': message.as_string()}
+        return message.as_string()

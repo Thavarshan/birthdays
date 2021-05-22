@@ -2,7 +2,9 @@ name: Run tests
 
 on:
   push:
+    branch: main
   pull_request:
+    branch: main
   schedule:
     - cron: '0 0 * * *'
 

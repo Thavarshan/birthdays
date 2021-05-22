@@ -1,20 +1,37 @@
+from birthdays.birthday import Birthday
 import sys
+from birthdays.wisher import createWisher
+from datetime import datetime
+from pprint import pprint
+from birthdays.api import API
 from decouple import config
-import json
-from birthdays.logger import Logger
-from birthdays.birthdays import Birthdays
 
 
-def main(people=None):
+def main():
+    api = API(config('API_TOKEN'))
+    birthday = Birthday(createWisher())
     try:
-        birthdays = Birthdays()
-        birthdays.check_for_birthdays_today(people)
+        birthdays = birthday.check_for_birthdays_today(
+            api.get(config('CONTACTS_URI')).json()
+        )
+        data = {
+            'status': True,
+            'context': '',
+            'contacts': birthdays
+        }
     except:
-        logger = Logger()
-        logger.log_error(str(sys.exc_info()))
+        data = {
+            'status': False,
+            'context': str(sys.exc_info()),
+            'contacts': []
+        }
+    response = api.post(config('LOGGING_URI'), data={
+        **data,
+        'app_name': config('APP_NAME'),
+        'init_time': str(datetime.now()),
+    })
+    pprint(response.text)
 
 
 if __name__ == '__main__':
     main()
-    # with open('tests/fixtures/people-test.json', 'r+') as people:
-    #     main(json.load(people))
