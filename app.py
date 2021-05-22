@@ -1,10 +1,10 @@
-from birthdays.birthday import Birthday
 import sys
-from birthdays.wisher import createWisher
 from datetime import datetime
 from pprint import pprint
-from birthdays.api import API
 from decouple import config
+from birthdays.birthday import Birthday
+from birthdays.wisher import createWisher
+from birthdays.api import API
 
 
 def main():
