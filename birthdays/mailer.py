@@ -1,6 +1,9 @@
+import smtplib
 from pprint import pprint
 from abc import ABC, abstractmethod
-from googleapiclient.discovery import build
+from birthdays.gmail import buildService
+import sendgrid
+from sendgrid.helpers.mail import Content, Email, Mail
 
 
 class Mailer(ABC):
@@ -17,23 +20,42 @@ class Mailer(ABC):
     def send_mail(self, content):
         pass
 
+    def set_credentials(self, email, password):
+        self.credentials['email'] = email
+        self.credentials['password'] = password
+
 
 class SMTPMailer(Mailer):
     def createService(self):
-        pass
+        with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
+            smtp.starttls()
+            smtp.login(
+                self.credentials['email'],
+                self.credentials['password']
+            )
+            return smtp
 
-    @abstractmethod
     def send_mail(self, content):
-        pass
+        smtp = self.createService()
+        smtp.sendmail(content)
 
 
-class OAuthMailer(Mailer):
+class GoogleMailer(Mailer):
     def createService(self):
-        return build('gmail', 'v1', credentials=self.credentials)
+        return buildService()
 
     def send_mail(self, content):
-        pprint(content)
-        # service = self.createService()
-        # service.users().messages().send(
-        #     userId='me', body=content
-        # ).execute()
+        service = self.createService()
+        service.users().messages().send(
+            userId='me', body=content
+        ).execute()
+
+
+class SendgridMailer(Mailer):
+    def createService(self):
+        return sendgrid.SendGridAPIClient(
+            apikey=config("SENDGRID_API_KEY")
+        )
+
+    def send_mail(self, content):
+        pass

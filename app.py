@@ -16,7 +16,7 @@ def main():
         )
         data = {
             'status': True,
-            'context': '',
+            'context': 'Successful',
             'contacts': birthdays
         }
     except:

@@ -1,7 +1,7 @@
 import random
 import json
 from birthdays.emails import Email, BirthdayEmail
-from birthdays.mailer import Mailer, OAuthMailer
+from birthdays.mailer import Mailer, SMTPMailer
 from decouple import config
 from pathlib import Path
 
@@ -32,6 +32,12 @@ class Wisher:
 
 
 def createWisher():
-    wisher = Wisher(OAuthMailer(None), BirthdayEmail())
+    wisher = Wisher(
+        SMTPMailer({
+            'email': config('MAIL_FROM_ADDRESS'),
+            'password': config('GMAIL_PASSWORD')
+        }),
+        BirthdayEmail()
+    )
     wisher.set_from_address(config('MAIL_FROM_ADDRESS'))
     return wisher
