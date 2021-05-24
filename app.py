@@ -10,7 +10,7 @@ def run():
 
         for birthday in birthdays:
             send_mail(birthday.get('email'), create_email(
-                config('GMAIL_ADDRESS'),
+                config('MAIL_FROM_ADDRESS'),
                 birthday.get('email'),
                 birthday.get('name'),
                 'Wish you a very happy birthday!',

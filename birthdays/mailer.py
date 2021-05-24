@@ -1,6 +1,7 @@
 import smtplib
 import ssl
 from abc import ABC, abstractmethod
+from decouple import config
 
 
 class Mailer(ABC):
@@ -21,6 +22,6 @@ class SMTPMailer(Mailer):
         email = self.credentials.get('email')
         context = ssl.create_default_context()
 
-        with smtplib.SMTP_SSL('smtp.gmail.com:465', context=context) as smtp:
+        with smtplib.SMTP_SSL(config('MAIL_HOST'), config('MAIL_PORT'), context=context) as smtp:
             smtp.login(email, self.credentials.get('password'))
             smtp.sendmail(email, args.get('to'), args.get('message'))

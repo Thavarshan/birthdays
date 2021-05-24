@@ -7,7 +7,7 @@ import lxml.html
 class Email(ABC):
 
     @abstractmethod
-    def make_email(self, fromaddr, toaddr, name, subject, content):
+    def make_email(self, content):
         pass
 
 
@@ -17,6 +17,7 @@ class BirthdayEmail(Email):
         return f"Dear {name},\n" + content + "\n"
 
     def make_email(self, fromaddr, toaddr, name, subject, content):
+        content = self.build_content(name, content)
         message = MIMEMultipart('related')
         message['From'] = fromaddr
         message['To'] = toaddr
@@ -33,4 +34,4 @@ class BirthdayEmail(Email):
         message_alternative.attach(part_text)
         message_alternative.attach(part_html)
 
-        return self.build_content(name, message.as_string())
+        return message.as_string()

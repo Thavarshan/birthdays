@@ -35,8 +35,8 @@ def create_email(fromaddr, toaddr, name, subject, content):
 
 def send_mail(email, message):
     mailer = SMTPMailer({
-        'email': config('GMAIL_ADDRESS'),
-        'password': config('GMAIL_PASSWORD')
+        'email': config('MAIL_USERNAME'),
+        'password': config('MAIL_PASSWORD')
     })
 
     mailer.send_mail(to=email, message=message)
