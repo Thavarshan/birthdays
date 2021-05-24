@@ -32,4 +32,5 @@ class BirthdayEmail(Email):
         part_html = MIMEText(content.encode('utf-8'), 'html', _charset='utf-8')
         message_alternative.attach(part_text)
         message_alternative.attach(part_html)
+
         return self.build_content(name, message.as_string())
