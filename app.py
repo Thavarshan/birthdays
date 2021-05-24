@@ -1,18 +1,23 @@
-import smtplib
-from email.mime.text import MIMEText
+from decouple import config
+import sys
+from pprint import pprint
+from birthdays import find_birthdays, create_email, create_wish, get_people, send_mail
 
 
-password = 'zhmxkmfpxyjkohcu'
-email = 'tjthavarshan@gmail.com'
-message = MIMEText("It actually works!")
-message['Subject'] = "Python Test Email"
-
-
-def send_mail():
-    with smtplib.SMTP_SSL('smtp.gmail.com:465') as smtp:
-        smtp.login(email, password)
-        smtp.sendmail(email, email, message.as_string())
-        smtp.quit()
+def main():
+    try:
+        birthdays = find_birthdays(get_people())
+        for birthday in birthdays:
+            send_mail(birthday.get('email'), create_email(
+                config('GMAIL_ADDRESS'),
+                birthday.get('email'),
+                birthday.get('name'),
+                'Wish you a very happy birthday!',
+                create_wish()
+            ))
+            pprint(birthday.get('name'))
+    except:
+        pprint(str(sys.exc_info()))
 
 
 if __name__ == '__main__':
