@@ -2,7 +2,7 @@ import requests
 from birthdays.emails import BirthdayEmail
 from pathlib import Path
 from birthdays.wishes import Wish
-from birthdays.mailer import SMTPMailer
+from birthdays.mailer import SendgridMailer
 from birthdays.birthdays import Birthday
 from decouple import config
 
@@ -34,9 +34,8 @@ def create_email(fromaddr, toaddr, name, subject, content):
 
 
 def send_mail(email, message):
-    mailer = SMTPMailer({
-        'email': config('MAIL_USERNAME'),
-        'password': config('MAIL_PASSWORD')
+    mailer = SendgridMailer({
+        'api_key': config('SENDGRID_API_KEY'),
     })
 
-    mailer.send_mail(to=email, message=message)
+    mailer.send_mail(message=message)

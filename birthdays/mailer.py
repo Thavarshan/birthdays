@@ -2,6 +2,7 @@ import smtplib
 import ssl
 from abc import ABC, abstractmethod
 from decouple import config
+from sendgrid import SendGridAPIClient
 
 
 class Mailer(ABC):
@@ -25,3 +26,10 @@ class SMTPMailer(Mailer):
         with smtplib.SMTP_SSL(config('MAIL_HOST'), config('MAIL_PORT'), context=context) as smtp:
             smtp.login(email, self.credentials.get('password'))
             smtp.sendmail(email, args.get('to'), args.get('message'))
+
+
+class SendgridMailer(Mailer):
+
+    def send_mail(self, **args):
+        with SendGridAPIClient(self.credentials.get('api_key')) as sendgrid:
+            sendgrid.send(args.get('message'))

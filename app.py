@@ -9,7 +9,7 @@ def run():
         birthdays = find_birthdays(get_people())
 
         for birthday in birthdays:
-            send_mail(birthday.get('email'), create_email(
+            send_mail(create_email(
                 config('MAIL_FROM_ADDRESS'),
                 birthday.get('email'),
                 birthday.get('name'),

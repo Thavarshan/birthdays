@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import lxml.html
+from sendgrid.helpers.mail import Mail
 
 
 class Email(ABC):
@@ -35,3 +36,14 @@ class BirthdayEmail(Email):
         message_alternative.attach(part_html)
 
         return message.as_string()
+
+
+class SendgridBirthdayEmail(Email):
+
+    def make_email(self, fromaddr, toaddr, name, subject, content):
+        return Mail(
+            from_email=fromaddr,
+            to_emails=toaddr,
+            subject=subject,
+            plain_text_content=self.build_content(name, content)
+        )
