@@ -1,20 +1,24 @@
-import sys
 from decouple import config
-import json
-from birthdays.logger import Logger
-from birthdays.birthdays import Birthdays
+import sys
+from pprint import pprint
+from birthdays import find_birthdays, create_email, create_wish, get_people, send_mail
 
 
-def main(people=None):
-    try:
-        birthdays = Birthdays()
-        birthdays.check_for_birthdays_today(people)
-    except:
-        logger = Logger()
-        logger.log_error(str(sys.exc_info()))
+def run():
+    birthdays = find_birthdays(get_people())
+
+    for birthday in birthdays:
+        send_mail(birthday.get('email'), create_email(
+            config('MAIL_FROM_ADDRESS'),
+            config('MAIL_FROM_NAME'),
+            birthday.get('email'),
+            birthday.get('name'),
+            'Wish you a very happy birthday!',
+            create_wish()
+        ))
+
+        pprint(birthday.get('name'))
 
 
 if __name__ == '__main__':
-    main()
-    # with open('tests/fixtures/people-test.json', 'r+') as people:
-    #     main(json.load(people))
+    run()

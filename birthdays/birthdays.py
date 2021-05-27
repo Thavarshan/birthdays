@@ -1,48 +1,25 @@
-from .requests import Requests
-from .wisher import Wisher
-from .logger import Logger
 from datetime import datetime
-from .emails import BirthdayEmail
-from .mailer import OAuthMailer
-from decouple import config
 
 
-class Birthdays:
+class Birthday:
 
     __birthdays = []
 
-    def __init__(self):
-        self.wisher = Wisher(OAuthMailer(), BirthdayEmail())
-        self.logger = Logger()
-        self.requests = Requests()
+    def __init__(self, people=[]):
+        self.people = people
 
-    def check_for_birthdays_today(self, people=None):
-        if people == None:
-            people = self.requests.get().json()
-        self.__birthdays = self.find_birthdays_and_mail_wishes(people)
-        if config('APP_ENV') == 'production':
-            self.logger.log(self.__birthdays)
-            print(self.__birthdays)
+    def find_birthdays(self):
+        for person in self.people:
+            if self.is_birthday_today(person.get('birthday')):
+                self.__birthdays.append(person)
 
-    def find_birthdays_and_mail_wishes(self, people):
-        return [self.wish_person(person) for person
-                in people
-                if self.is_birthday_today(person.get('birthday'))]
-
-    def wish_person(self, person):
-        return self.wisher.wish_person(person.get('name'), person.get('email'))
+        return self.__birthdays
 
     def is_birthday_today(self, birthday):
-        try:
-            birthday = (
-                datetime
-                .strptime(birthday, '%Y-%m-%dT%H:%M:%S.%fZ')
-                .strftime('%d-%m')
-            )
-        except ValueError:
-            birthday = birthday[:5]
-        finally:
-            return bool(birthday == datetime.now().strftime('%d-%m'))
+        birthday = (
+            datetime
+            .strptime(birthday, '%Y-%m-%dT%H:%M:%S.%fZ')
+            .strftime('%d-%m')
+        )
 
-    def birthdays_today(self):
-        return self.__birthdays
+        return bool(birthday == datetime.now().strftime('%d-%m'))
