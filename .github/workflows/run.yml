@@ -2,7 +2,8 @@ name: Run application
 
 on:
   push:
-    branch: main
+    branches:
+      - main
   schedule:
     - cron: '0 0 * * *'
 
@@ -23,15 +24,15 @@ jobs:
       run: pip install -r requirements.txt
     - name: Run main app module
       env:
-        GOOGLE_ACCOUNTS_BASE_URL: ${{ secrets.GOOGLE_ACCOUNTS_BASE_URL }}
-        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-        GOOGLE_REFRESH_TOKEN: ${{ secrets.GOOGLE_REFRESH_TOKEN }}
-        MAIL_FROM_ADDRESS: ${{ secrets.MAIL_FROM_ADDRESS }}
-        REDIRECT_URI: ${{ secrets.REDIRECT_URI }}
-        API_TOKEN: ${{ secrets.API_TOKEN }}
-        API_ENDPOINT: ${{ secrets.API_ENDPOINT }}
-        API_LOGGING_ENDPOINT: ${{ secrets.API_LOGGING_ENDPOINT }}
         APP_NAME: ${{ secrets.APP_NAME }}
-        APP_ENV: ${{ secrets.APP_ENV }}
+        MAIL_MAILER: ${{ secrets.MAIL_MAILER }}
+        MAIL_HOST: ${{ secrets.MAIL_HOST }}
+        MAIL_PORT: ${{ secrets.MAIL_PORT }}
+        MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+        MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+        MAIL_FROM_ADDRESS: ${{ secrets.MAIL_FROM_ADDRESS }}
+        MAIL_FROM_NAME: ${{ secrets.MAIL_FROM_NAME }}
+        SENDGRID_API_KEY: ${{ secrets.SENDGRID_API_KEY }}
+        API_TOKEN: ${{ secrets.API_TOKEN }}
+        CONTACTS_URI: ${{ secrets.CONTACTS_URI }}
       run: python3 app.py

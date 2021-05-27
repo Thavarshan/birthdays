@@ -2,23 +2,23 @@ from abc import ABC, abstractmethod
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import lxml.html
-from sendgrid.helpers.mail import Mail
+from sendgrid.helpers.mail import To, Email as SendgridEmail, Mail
 
 
 class Email(ABC):
 
+    def build_content(self, name, content):
+        return f"Dear {name},\n\n" + content + "\n"
+
     @abstractmethod
-    def make_email(self, content):
+    def make_email(self, fromaddr, fromname, toaddr, toname, subject, content):
         pass
 
 
 class BirthdayEmail(Email):
 
-    def build_content(self, name, content):
-        return f"Dear {name},\n" + content + "\n"
-
-    def make_email(self, fromaddr, toaddr, name, subject, content):
-        content = self.build_content(name, content)
+    def make_email(self, fromaddr, fromname, toaddr, toname, subject, content):
+        content = self.build_content(toname, content)
         message = MIMEMultipart('related')
         message['From'] = fromaddr
         message['To'] = toaddr
@@ -40,10 +40,10 @@ class BirthdayEmail(Email):
 
 class SendgridBirthdayEmail(Email):
 
-    def make_email(self, fromaddr, toaddr, name, subject, content):
+    def make_email(self, fromaddr, fromname, toaddr, toname, subject, content):
         return Mail(
-            from_email=fromaddr,
-            to_emails=toaddr,
-            subject=subject,
-            plain_text_content=self.build_content(name, content)
+            SendgridEmail(email=fromaddr, name=fromname),
+            To(email=toaddr, name=toname),
+            subject,
+            self.build_content(toname, content)
         )

@@ -31,5 +31,5 @@ class SMTPMailer(Mailer):
 class SendgridMailer(Mailer):
 
     def send_mail(self, **args):
-        with SendGridAPIClient(self.credentials.get('api_key')) as sendgrid:
-            sendgrid.send(args.get('message'))
+        sendgrid = SendGridAPIClient(self.credentials.get('api_key'))
+        sendgrid.send(args.get('message'))

@@ -5,21 +5,19 @@ from birthdays import find_birthdays, create_email, create_wish, get_people, sen
 
 
 def run():
-    try:
-        birthdays = find_birthdays(get_people())
+    birthdays = find_birthdays(get_people())
 
-        for birthday in birthdays:
-            send_mail(create_email(
-                config('MAIL_FROM_ADDRESS'),
-                birthday.get('email'),
-                birthday.get('name'),
-                'Wish you a very happy birthday!',
-                create_wish()
-            ))
+    for birthday in birthdays:
+        send_mail(birthday.get('email'), create_email(
+            config('MAIL_FROM_ADDRESS'),
+            config('MAIL_FROM_NAME'),
+            birthday.get('email'),
+            birthday.get('name'),
+            'Wish you a very happy birthday!',
+            create_wish()
+        ))
 
-            pprint(birthday.get('name'))
-    except:
-        pprint(str(sys.exc_info()))
+        pprint(birthday.get('name'))
 
 
 if __name__ == '__main__':
