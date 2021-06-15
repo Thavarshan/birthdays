@@ -33,7 +33,7 @@ def create_wish():
 def create_email(fromaddr, fromname, toaddr, toname, subject, content):
     email = SendgridBirthdayEmail()
 
-    return email.make_email(fromaddr, fromname, toaddr, name, subject, content)
+    return email.make_email(fromaddr, fromname, toaddr, toname, subject, content)
 
 
 def send_mail(email, message):
