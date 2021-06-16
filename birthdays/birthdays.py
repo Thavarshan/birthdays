@@ -18,7 +18,7 @@ class Birthday:
     def is_birthday_today(self, birthday):
         birthday = (
             datetime
-            .strptime(birthday, '%Y-%m-%dT%H:%M:%S.%fZ')
+            .strptime(birthday, '%Y-%m-%d')
             .strftime('%d-%m')
         )
 

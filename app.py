@@ -6,7 +6,6 @@ from birthdays import find_birthdays, create_email, create_wish, get_people, sen
 
 def run():
     birthdays = find_birthdays(get_people())
-
     for birthday in birthdays:
         send_mail(birthday.get('email'), create_email(
             config('MAIL_FROM_ADDRESS'),
@@ -16,7 +15,6 @@ def run():
             'Wish you a very happy birthday!',
             create_wish()
         ))
-
         pprint(birthday.get('name'))
 
 
