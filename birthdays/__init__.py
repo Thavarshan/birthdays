@@ -1,5 +1,5 @@
 import requests
-from birthdays.emails import SendgridBirthdayEmail
+from birthdays.emails import BirthdayEmail
 from pathlib import Path
 from birthdays.wishes import Wish
 from birthdays.mailer import SMTPMailer
@@ -27,7 +27,7 @@ def create_wish():
 
 
 def create_email(fromaddr, fromname, toaddr, toname, subject, content):
-    email = SendgridBirthdayEmail()
+    email = BirthdayEmail()
     return email.make_email(fromaddr, fromname, toaddr, toname, subject, content)
 
 
